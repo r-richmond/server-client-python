@@ -15,7 +15,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 # This makes work easier for offline installs or low bandwidth machines
 needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
-test_requirements = ['black', 'mock', 'pytest', 'requests-mock>=1.0,<2.0', 'mypy>=0.920']
+test_requirements = ['black', 'mock', 'pytest', 'requests-mock>=1.0,<2.0', 'mypy==0.910']
 
 setup(
     name='tableauserverclient',
@@ -25,10 +25,7 @@ setup(
     author_email='github@tableau.com',
     url='https://github.com/tableau/server-client-python',
     package_data={'tableauserverclient':['py.typed']},
-    packages=['tableauserverclient',
-              'tableauserverclient.helpers',
-              'tableauserverclient.models',
-              'tableauserverclient.server',
+    packages=['tableauserverclient', 'tableauserverclient.models', 'tableauserverclient.server',
               'tableauserverclient.server.endpoint'],
     license='MIT',
     description='A Python module for working with the Tableau Server REST API.',
@@ -40,7 +37,6 @@ setup(
         'defusedxml>=0.7.1',
         'requests>=2.11,<3.0',
     ],
-    python_requires='>3.7.0',
     tests_require=test_requirements,
     extras_require={
         'test': test_requirements

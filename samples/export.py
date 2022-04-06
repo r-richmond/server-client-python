@@ -2,7 +2,7 @@
 # This script demonstrates how to export a view using the Tableau
 # Server Client.
 #
-# To run the script, you must have installed Python 3.7 or later.
+# To run the script, you must have installed Python 3.6 or later.
 ####
 
 import argparse
@@ -40,13 +40,10 @@ def main():
     group.add_argument(
         "--csv", dest="type", action="store_const", const=("populate_csv", "CSVRequestOptions", "csv", "csv")
     )
-    # other options shown in explore_workbooks: workbook.download, workbook.preview_image
-
-    parser.add_argument("--workbook", action="store_true")
 
     parser.add_argument("--file", "-f", help="filename to store the exported data")
     parser.add_argument("--filter", "-vf", metavar="COLUMN:VALUE", help="View filter to apply to the view")
-    parser.add_argument("resource_id", help="LUID for the view or workbook")
+    parser.add_argument("resource_id", help="LUID for the view")
 
     args = parser.parse_args()
 
@@ -55,46 +52,34 @@ def main():
     logging.basicConfig(level=logging_level)
 
     tableau_auth = TSC.PersonalAccessTokenAuth(args.token_name, args.token_value, site_id=args.site)
-    server = TSC.Server(args.server, use_server_version=True, http_options={"verify": False})
+    server = TSC.Server(args.server, use_server_version=True)
     with server.auth.sign_in(tableau_auth):
-        print("Connected")
-        if args.workbook:
-            item = server.workbooks.get_by_id(args.resource_id)
-        else:
-            item = server.views.get_by_id(args.resource_id)
+        views = filter(lambda x: x.id == args.resource_id or x.name == args.resource_id, TSC.Pager(server.views.get))
+        view = list(views).pop()  # in python 3 filter() returns a filter object
 
-        if not item:
-            print("No item found for id {}".format(args.resource_id))
-            exit(1)
-
-        print("Item found: {}".format(item.name))
         # We have a number of different types and functions for each different export type.
         # We encode that information above in the const=(...) parameter to the add_argument function to make
         # the code automatically adapt for the type of export the user is doing.
         # We unroll that information into methods we can call, or objects we can create by using getattr()
         (populate_func_name, option_factory_name, member_name, extension) = args.type
         populate = getattr(server.views, populate_func_name)
-        if args.workbook:
-            populate = getattr(server.workbooks, populate_func_name)
-
         option_factory = getattr(TSC, option_factory_name)
 
         if args.filter:
             options = option_factory().vf(*args.filter.split(":"))
         else:
             options = None
-
         if args.file:
             filename = args.file
         else:
             filename = "out.{}".format(extension)
 
-        populate(item, options)
+        populate(view, options)
         with open(filename, "wb") as f:
             if member_name == "csv":
-                f.writelines(getattr(item, member_name))
+                f.writelines(getattr(view, member_name))
             else:
-                f.write(getattr(item, member_name))
+                f.write(getattr(view, member_name))
         print("saved to " + filename)
 
 

@@ -39,8 +39,6 @@ def _tsrequest_wrapped(func):
 
 def _add_connections_element(connections_element, connection):
     connection_element = ET.SubElement(connections_element, "connection")
-    if not connection.server_address:
-        raise ValueError("Connection must have a server address")
     connection_element.attrib["serverAddress"] = connection.server_address
     if connection.server_port:
         connection_element.attrib["serverPort"] = connection.server_port
@@ -57,8 +55,6 @@ def _add_hiddenview_element(views_element, view_name):
 
 def _add_credentials_element(parent_element, connection_credentials):
     credentials_element = ET.SubElement(parent_element, "connectionCredentials")
-    if not connection_credentials.password or not connection_credentials.name:
-        raise ValueError("Connection Credentials must have a name and password")
     credentials_element.attrib["name"] = connection_credentials.name
     credentials_element.attrib["password"] = connection_credentials.password
     credentials_element.attrib["embed"] = "true" if connection_credentials.embed else "false"
@@ -236,7 +232,7 @@ class DQWRequest(object):
 
         return ET.tostring(xml_request)
 
-    def update_req(self, dqw_item):
+    def update_req(self, database_item):
         xml_request = ET.Element("tsRequest")
         dqw_element = ET.SubElement(xml_request, "dataQualityWarning")
 
@@ -881,6 +877,7 @@ class WorkbookRequest(object):
             views_element = ET.SubElement(workbook_element, "views")
             for view_name in workbook_item.hidden_views:
                 _add_hiddenview_element(views_element, view_name)
+
         return ET.tostring(xml_request)
 
     def update_req(self, workbook_item):
@@ -953,9 +950,9 @@ class WorkbookRequest(object):
         list_element = ET.SubElement(xml_request, "datasources")
         if include_all:
             list_element.attrib["includeAll"] = "true"
-        elif datasources:
+        else:
             for datasource_item in datasources:
-                datasource_element = ET.SubElement(list_element, "datasource")
+                datasource_element = list_element.SubElement(xml_request, "datasource")
                 datasource_element.attrib["id"] = datasource_item.id
 
 
