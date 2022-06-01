@@ -6,6 +6,7 @@ ASYNC_POLL_MAX_INTERVAL = 30
 ASYNC_POLL_BACKOFF_FACTOR = 1.4
 
 
+# TODO: can this be replaced by e.g https://polling2.readthedocs.io/en/latest/api.html#polling2.step_linear_double?
 class ExponentialBackoffTimer:
     def __init__(self, *, timeout=None):
         self.start_time = time.time()
