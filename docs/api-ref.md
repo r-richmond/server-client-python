@@ -785,6 +785,385 @@ A `JobItem` for the update job on the server. Upon completion of this job, the d
 
 See the `update_datasource_data.py` sample in the Samples directory.
 
+<br>
+<br>
+
+## Favorites
+Using the TSC Library, you can add or delete favorites with datasources, flows, projects, views, and workbooks. 
+
+The favorites resources for Tableau Server are defined in the 'FavoriteItem' class. The class corresponds to the favorites resources you can access using the Tableau Server REST API. The favorites methods are based upon the endpoints for favorites in the REST API and operate on the 'FavoriteItem' class.
+
+<br>
+<br>
+
+### Favorites item
+
+*elaborate on favorites type, etc.*
+
+Source file: models/favorites_item.py
+
+
+
+<br>
+<br>
+
+### Favorites methods
+
+The Tableau Server Client provides several methods for managing favorites resources, or endpoints. 
+These methods correspond to endpoints in the Tableau Server REST API.
+
+
+Source file: server/endpoint/favorites_endpoint.py
+
+<br>
+<br>
+
+### favorites.get
+
+```py
+favorites.get(user_item, req_options):
+```
+
+Gets all favorites. 
+
+REST API [Get Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#get_favorites)
+
+**Parameters**
+
+| Name               | Description                                           |
+|--------------------|-------------------------------------------------------|
+| 'user_item'        | The 'user_item" specifies the user to add a favorite. |
+|  'request_options' | Queries all favorites for user.                       |
+
+**Returns**
+The sites of all favorites.
+
+**Example**
+
+```py
+# Gets all favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.add_favorite_workbook
+
+```py
+favorites.add_favorite_workbook(user_item, workbook_item):
+```
+
+Adds a workbook to favorites. 
+
+REST API [Add Workbook to Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#add_workbook_to_favorites)
+
+**Parameters**
+
+| Name             | Description |
+|------------------| --- |
+| 'user_item'      | The 'user_item" specifies the user to add a favorite. |
+|  'workbook_item' | The 'workbook_item' specifies the workbook to favorite. |
+
+**Returns**
+The site of the workbook.
+
+
+
+**Example**
+
+```py
+# Adding a workbook to favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.add_favorite_view
+
+```py
+favorites.add_favorite_view(user_item, view_item):
+```
+
+Adds a view to favorites. 
+
+REST API [Add View to Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#add_view_to_favorites)
+
+**Parameters**
+
+| Name        | Description |
+|-------------| --- |
+| 'user_item' | The 'user_item" specifies the user to add a favorite. |
+| 'view_item' | The 'view_item' specifies the view to favorite. |
+
+**Returns**
+The site of the view.
+
+
+
+**Example**
+
+```py
+# Adding a view to favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.add_favorite_datasource
+
+```py
+favorites.add_favorite_datsource(user_item, datasource_item):
+```
+
+Adds a datasource to favorites. 
+
+REST API [Add Datasource to Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#add_datasource_to_favorites)
+
+**Parameters**
+
+| Name               | Description |
+|--------------------| --- |
+| 'user_item'        | The 'user_item" specifies the user to add a favorite. |
+|  'datasource_item' | The 'datasource_item' specifies the datasource to favorite. |
+
+**Returns**
+The site of the datasource.
+
+
+**Example**
+
+```py
+# Adding a datasource to favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.add_favorite_project
+
+```py
+favorites.add_favorite_project(user_item, project_item):
+```
+
+Adds a project to favorites. 
+
+REST API [Add Project to Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#add_project_to_favorites)
+
+**Parameters**
+
+| Name            | Description |
+|-----------------| --- |
+| 'user_item'     | The 'user_item" specifies the user to add a favorite. |
+|  'project_item' | The 'project_item' specifies the project to favorite. |
+
+**Returns**
+The site of the project.
+
+
+
+**Example**
+
+```py
+# Adding a project to favorites
+# Example here
+```
+
+<br>
+<br>
+
+
+### favorites.add_favorite_flow
+
+```py
+favorites.add_favorite_flow(user_item, flow_item):
+```
+
+Adds a flow to favorites. 
+
+REST API [Add Flow to Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#add_flow_to_favorites)
+
+**Parameters**
+
+| Name         | Description |
+|--------------| --- |
+| 'user_item'  | The 'user_item" specifies the user to add a favorite. |
+|  'flow_item' | The 'flow_item' specifies the flow to favorite. |
+
+**Returns**
+The site of the flow.
+
+
+
+**Example**
+
+```py
+# Adding a flow to favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.delete_favorite_workbook
+
+```py
+favorites.delete_favorite_workbook(user_item, workbook_item):
+```
+
+Deletes a workbook from favorites. 
+
+REST API [Delete Workbook from Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#delete_workbook_from_favorites)
+
+**Parameters**
+
+| Name             | Description |
+|------------------| --- |
+| 'user_item'      | The 'user_item" specifies the user to delete a favorite. |
+|  'workbook_item' | The 'workbook_item' specifies the workbook to delete from favorites. |
+
+**Returns**
+None.
+
+
+
+**Example**
+
+```py
+# Deleting a workbook from favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.delete_favorite_view
+
+```py
+favorites.delete_favorite_view(user_item, view_item):
+```
+
+Deletes a view from favorites. 
+
+REST API [Delete View from Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#delete_view_from_favorites)
+
+**Parameters**
+
+| Name        | Description                                                 |
+|-------------|-------------------------------------------------------------|
+| 'user_item' | The 'user_item" specifies the user to delete a favorite.  |
+| 'view_item' | The 'view_item' specifies the view to delete from favorites. |
+
+**Returns**
+None.
+
+
+
+**Example**
+
+```py
+# Deleting a view from favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.delete_favorite_project
+
+```py
+favorites.delete_favorite_project(user_item, project_item):
+```
+
+Deletes a project from favorites. 
+
+REST API [Delete Project from Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#delete_project_from_favorites)
+
+**Parameters**
+
+| Name            | Description                                                        |
+|-----------------|--------------------------------------------------------------------|
+| 'user_item'     | The 'user_item" specifies the user to delete a favorite.           |
+|  'project_item' | The 'project_item' specifies the project to delete from favorites. |
+
+**Returns**
+None.
+
+
+
+**Example**
+
+```py
+# Deleting a datasource from favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.delete_favorite_datasource
+
+```py
+favorites.delete_favorite_datasource(user_item, datasource_item):
+```
+
+Deletes a datasource from favorites. 
+
+REST API [Delete Datasource from Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#delete_datasource_from_favorites)
+
+**Parameters**
+
+| Name               | Description |
+|--------------------| --- |
+| 'user_item'        | The 'user_item" specifies the user to delete a favorite. |
+|  'datasource_item' | The 'datasource_item' specifies the datasource to delete from favorites. |
+
+**Returns**
+None.
+
+
+
+**Example**
+
+```py
+# Deleting a project from favorites
+# Example here
+```
+
+<br>
+<br>
+
+### favorites.delete_favorite_flow
+
+```py
+favorites.delete_favorite_flow(user_item, flow_item):
+```
+
+Deletes a flow from favorites. 
+
+REST API [Delete FLow from Favorites](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#delete_flow_from_favorites)
+
+**Parameters**
+
+| Name         | Description |
+|--------------| --- |
+| 'user_item'  | The 'user_item" specifies the user to delete a favorite. |
+|  'flow_item' | The 'flow_item' specifies the flow to delete from favorites. |
+
+**Returns**
+None.
+
+
+
+**Example**
+
+```py
+# Deleting a flow from favorites
+# Example here
+```
 
 <br>
 <br>
