@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   build:
+    if: '{{ github.event.repository_id == 62177327 }}'  # don't bother running in forks
     strategy:
       fail-fast: false
       matrix:

@@ -1,12 +1,18 @@
 name: 💬 Send Message to Slack 🚀
 
-on: [push, pull_request, issues]
+on: push
+    pull_request
+    issue_comment
+    issues:
+      types: [assigned, opened, edited, reopened]
+    ]
 
 jobs:
   slack-notifications:
     continue-on-error: true
     runs-on: ubuntu-20.04
     name: Sends a message to Slack when a push, a pull request or an issue is made
+    if: '{{ github.event.repository_id == 62177327 }}'  # don't bother running in forks
     steps:
       - name: Send message to Slack API
         continue-on-error: true
