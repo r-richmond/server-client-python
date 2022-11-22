@@ -1,3 +1,29 @@
+
+checks
+- boundary string: what are the requirements?
+
+"""
+format:
+boundary_string  # - -= == 1668646805988 == =
+header_content_disposition  # Content - Disposition: name = "request_payload"
+header_content_type  # Content-Type: text/xml; [optional charset?]
+ts_request  # 
+    < tsRequest >
+        < workbook name = "SuperstoreAuthoring.twbx" showTabs = "true" >
+        < project id = "bcb511d6-c1f2-4007-a437-775d5911f04f" / >
+        < / workbook >
+    < / tsRequest >
+boundary_string  # - -= == 1668646805988 == =
+file_content_disposition  # Content - Disposition: name = "tableau_workbook";
+filename  # filename = "SuperstoreAuthoring.twbx"
+file_content_type  #Content - Type: application / octet - stream
+file_content_transfer  #Content - Transfer - Encoding: binary
+boundary_string  # - -= == 1668646805988 == = --
+"""
+
+
+
+
 ####
 # This script demonstrates how to use the Tableau Server Client
 # to publish a workbook to a Tableau server. It will publish
