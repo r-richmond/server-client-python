@@ -100,23 +100,10 @@ class Users(QuerysetEndpoint):
     # helping the user by parsing a file they could have used to add users through the UI
     # line format: Username [required], password, display name, license, admin, publish
     @api(version="2.0")
-    def create_from_file(self, filepath: str) -> Tuple[List[UserItem], List[Tuple[UserItem, ServerResponseError]]]:
-        created = []
-        failed = []
-        if not filepath.find("csv"):
-            raise ValueError("Only csv files are accepted")
-
-        with open(filepath, encoding='utf-8-sig') as csv_file:
-            csv_file.seek(0)  # set to start of file in case it has been read earlier
-            csv_data = reader(csv_file, delimiter=',')
-            for line in csv_data:
-                user: UserItem = UserItem.CSVImport.create_user_from_line(line)
-                try:
-                    result = self.add(user)
-                    created.append(result)
-                except ServerResponseError as serverError:
-                    failed.append((user, serverError))
-        return created, failed
+    def create_from_file(self, filepath: str) -> Tuple[List[UserItem], List[Tuple[UserItem, Exception]]]:
+        potential_users, errors = UserItem.CSVImport.validate_file_for_import(filepath)
+        users, server_errors = self.add_all(potential_users)
+        return users, errors + server_errors
 
     # Get workbooks for user
     @api(version="2.0")
